@@ -8,7 +8,10 @@ stage('Migrations') {
             statusCode = sh script: "echo 'hello!!'", returnStatus: true
           }
 
-        error "Migrations failed!"
+        echo "${statusCode}"
+        if (statusCode > 0) {
+          error "Migrations failed!"
+        }
       }
 
     }
