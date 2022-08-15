@@ -8,7 +8,7 @@ stage('Migrations') {
             statusCode = sh script: "grep babla phpunit.xml", returnStatus: true
           }
 
-        echo "${statusCode}"
+        echo "Status: ${statusCode}"
         if (statusCode > 0) {
           error "Migrations failed!"
         }
