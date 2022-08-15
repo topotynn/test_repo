@@ -5,7 +5,7 @@ stage('Migrations') {
         docker
           .image("registry.digicode.net/digicode/orange:fix-migrations-error")
           .inside('-u root --privileged') {
-            statusCode = sh script: "echo 'hello!!'; exit 1", returnStatus: true
+            statusCode = sh script: "grep babla phpunit.xml", returnStatus: true
           }
 
         echo "${statusCode}"
