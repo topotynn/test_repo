@@ -3,7 +3,7 @@ stage('Migrations') {
     wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'XTerm', 'defaultFg': 1, 'defaultBg': 2]) {
       docker.withRegistry('https://registry.digicode.net', 'harbor_admin'){
         docker
-          .image(IMAGE_NAME)
+          .image("registry.digicode.net/digicode/orange:fix-migrations-error")
           .inside('-u root --privileged') {
             statusCode = sh script: "echo 'hello!!'", returnStatus: true
           }
