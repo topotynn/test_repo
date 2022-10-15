@@ -1,0 +1,186 @@
+{{- if $.Values.deployments }}
+{{- range $deployment := $.Values.deployments -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ $.Values.application.name }}-{{ $deployment.name }}
+  labels:
+    app: {{ $.Values.application.name }}-{{ $deployment.name }}
+spec:
+  replicas: {{ $deployment.replicas }}
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      app: {{ $.Values.application.name }}-{{ $deployment.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ $.Values.application.name }}-{{ $deployment.name }}
+      annotations:
+        timestamp: {{ now | quote }}
+    spec:
+      imagePullSecrets:
+        - name: regcred
+      restartPolicy: Always
+      terminationGracePeriodSeconds: {{ $deployment.terminationGracePeriodSeconds | default "300" }}
+      {{- if $deployment.tolerations }}
+      tolerations:
+        {{- range $toleration := $deployment.tolerations }}
+        - key: {{ $toleration.key | quote }}
+          operator: {{ $toleration.operator | quote | default "Equal" | quote }}
+          value: {{ $toleration.value | quote }}
+          effect: {{ $toleration.effect | quote | default "NoExecute" | quote }}
+        {{- end }}
+      {{- end }}
+      {{- if $deployment.nodeAffinity }}
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              {{- range $term := $deployment.nodeAffinity.nodeSelectorTerms }}
+              - matchExpressions:
+                - key: {{ $term.key }}
+                  operator: {{ $term.operator | default "In" }}
+                  values:
+                  {{- range $value := $term.values }}
+                    - {{ $value }}
+                  {{- end }}
+              {{- end }}
+      {{- end }}
+      containers:
+        {{- range $container := $deployment.containers }}
+        - name: {{ $container.name }}
+          image: {{ $container.image }}
+          imagePullPolicy: Always
+          {{- if $container.lifecycle }}
+          lifecycle:
+            postStart:
+              exec:
+                command:
+                  - "/bin/sh"
+                  - "-c"
+                  - >
+                    {{- range $command := $container.lifecycle.command }}
+                    {{ $command }}
+                    {{- end -}}
+          {{- end -}}
+          {{- if $container.readness }}
+          readinessProbe:
+            httpGet:
+              path: {{ $container.readness.path }}
+              port: {{ $container.readness.port }}
+              scheme: HTTP
+            initialDelaySeconds: 5
+            timeoutSeconds: 15
+            periodSeconds: 15
+            successThreshold: 1
+            failureThreshold: 3
+          {{- end }}
+          {{- if $container.liveness }}
+          livenessProbe:
+            httpGet:
+              path: {{ $container.liveness.path }}
+              port: {{ $container.liveness.port }}
+              scheme: HTTP
+            initialDelaySeconds: 15
+            timeoutSeconds: 15
+            periodSeconds: 15
+            successThreshold: 1
+            failureThreshold: 5
+          {{- end }}
+          {{- if $container.resources }}
+          resources:
+            {{- if $container.resources.requests }}
+            requests:
+              {{- if $container.resources.requests.cpu }}
+              cpu: {{ $container.resources.requests.cpu | quote }}
+              {{- end }}
+              {{- if $container.resources.requests.memory }}
+              memory: {{ $container.resources.requests.memory | quote }}
+              {{- end }}
+            {{- end }}
+            {{- if $container.resources.limits }}
+            limits:
+              {{- if $container.resources.limits.cpu }}
+              cpu: {{ $container.resources.limits.cpu | quote }}
+              {{- end }}
+              {{- if $container.resources.limits.memory }}
+              memory: {{ $container.resources.limits.memory | quote }}
+              {{- end }}
+            {{- end }}
+          {{- end }}
+          {{- if or $container.envs $container.envMap $container.secrets $container.envsValue }}
+          env:
+            {{- range $envName := $container.envs }}
+            - name: {{ $envName }}
+              valueFrom:
+                configMapKeyRef:
+                  key: {{ $envName }}
+                  name: {{ $.Values.application.name }}
+                  optional: false
+            {{- end -}}
+            {{- range $env := $container.envsValue }}
+            - name: {{ $env.name | quote }}
+              value: {{ $env.value | quote }}
+            {{- end -}}
+            {{- range $envName, $envValue := $container.envsMap }}
+            - name: {{ $envValue }}
+              valueFrom:
+                configMapKeyRef:
+                  key: {{ $envName }}
+                  name: {{ $.Values.application.name }}
+                  optional: false
+            {{- end -}}
+            {{- range $envName := $container.secrets }}
+            - name: {{ $envName }}
+              valueFrom:
+                secretKeyRef:
+                  key: {{ $envName }}
+                  name: {{ $.Values.application.name }}
+                  optional: false
+            {{- end -}}
+          {{- end -}}
+          {{- if $container.ports }}
+          ports:
+          {{- range $port := $container.ports }}
+            - containerPort: {{  $port.containerPort }}
+              protocol: {{ $port.protocol | default "TCP" }}
+          {{- end -}}
+          {{- end -}}
+          {{- if $container.volumeMounts }}
+          volumeMounts:
+            {{- range $volume := $container.volumeMounts }}
+            - mountPath: {{ $volume.mountPath }}
+              name: {{ $volume.name }}
+              {{- if $volume.subPath }}
+              subPath: {{ $volume.subPath }}
+              {{- end -}}
+            {{- end -}}
+          {{- end -}}
+        {{- end }}
+      {{- if $deployment.volumes }}
+      volumes:
+        {{- range $volume := $deployment.volumes }}
+        - name: {{ $volume.name }}
+          {{- if $volume.configMap }}
+          configMap:
+            name: {{ $volume.configMap.name }}
+          {{- end -}}
+          {{- if $volume.secret }}
+          secret:
+            secretName: {{ $volume.secret.name }}
+          {{- end -}}
+          {{- if $volume.claimName }}
+          persistentVolumeClaim:
+            claimName: {{ $volume.claimName }}
+          {{- end -}}
+        {{- end -}}
+      {{ end }}
+
+---
+{{ end }}
+{{ end }}

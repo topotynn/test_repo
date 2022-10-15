@@ -1,0 +1,37 @@
+{{- if $.Values.services }}
+{{- range $service := $.Values.services -}}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ $.Values.application.name }}-{{ $service.name }}
+  labels:
+    app: {{ $.Values.application.name }}-{{ $service.name }}
+  {{- if $service.annotations }}
+  annotations:
+    {{ toYaml $service.annotations | indent 4 | trim }}
+  {{- end }}
+spec:
+  ports:
+    {{- range $port := $service.ports }}
+    - port: {{ $port.port }}
+      targetPort: {{ $port.port }}
+      protocol: {{ $port.protocol | default "TCP" }}
+      {{- if eq $service.type "LoadBalancer" }}
+      nodePort: {{ $port.nodePort }}
+      {{- end }}
+    {{- end }}
+  selector:
+    app: {{ $.Values.application.name }}-{{ $service.name }}
+  type: {{ $service.type | default "ClusterIP" }}
+  {{- if eq $service.type "LoadBalancer" }}
+  loadBalancerIP: {{ $service.loadBalancerIP }}
+  loadBalancerSourceRanges:
+    {{- range $ip := $service.loadBalancerSourceRanges }}
+    - {{ $ip }}
+    {{- end }}
+  sessionAffinity: {{ $service.sessionAffinity }}
+  {{ end }}
+
+---
+{{ end }}
+{{ end }}
