@@ -27,7 +27,7 @@ spec:
                 port:
                   name: {{ $path.serviceName }}
                   number: {{ $path.servicePort }}
----
           {{- end }}
     {{- end }}
+---
 {{ end }}
