@@ -32,3 +32,13 @@ services:
     ports:
       - port: 80
         targetPort: 8080
+
+ingress:
+  rules:
+    paths:
+      - path: /nginx
+        serviceName: test-nginx
+        servicePort: 80
+      - path: /tomcat
+        serviceName: test-tomcat
+        servicePort: 80        

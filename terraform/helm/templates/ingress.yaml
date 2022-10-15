@@ -20,7 +20,7 @@ spec:
     {{- end }}
         paths:
           {{- range $path := $rule.paths }}
-          - path: {{ $path }}
+          - path: {{ $path.path }}
             backend:
               service:
                 name: {{ $path.serviceName }}
