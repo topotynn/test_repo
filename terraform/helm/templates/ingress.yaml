@@ -10,14 +10,14 @@ metadata:
 spec:
   rules:
     {{- range $rule := $.Values.ingress.rules }}
-#    {{- if $rule.host }}
-#    - host: {{ $rule.host.domain }}
-#    {{- end }}
-    {{- if not $rule.host }}
-    - http:
-    {{- else }}
-      http:
+    {{- if $rule.host }}
+    - host: {{ $rule.host.domain }}
     {{- end }}
+#    {{- if not $rule.host }}
+#    - http:
+#    {{- else }}
+      http:
+#    {{- end }}
         paths:
           {{- range $path := $rule.paths }}
           - path: {{ $path.path }}
