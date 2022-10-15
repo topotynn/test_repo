@@ -36,9 +36,11 @@ services:
 ingress:
   rules:
     paths:
-      - path: /nginx
+      - host: test.net
+        path: /nginx
         serviceName: test-nginx
         servicePort: 80
-      - path: /tomcat
+      - host: test.net
+        path: /tomcat
         serviceName: test-tomcat
-        servicePort: 80        
+        servicePort: 80
