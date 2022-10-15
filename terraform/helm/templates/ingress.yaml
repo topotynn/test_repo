@@ -20,7 +20,8 @@ spec:
     {{- end }}
         paths:
           {{- range $path := $rule.http }}
-          - path: {{ $path.path }}
+          - pathType: "Exact"
+            path: {{ $path.path }}
             backend:
               service:
                 name: {{ $path.serviceName }}
