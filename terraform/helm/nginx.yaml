@@ -34,6 +34,7 @@ services:
         targetPort: 8080
 
 ingress:
+  name: ingress
   rules:
     - http:
         - path: /nginx
