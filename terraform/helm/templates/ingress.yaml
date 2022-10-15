@@ -13,13 +13,13 @@ spec:
     {{- if $rule.host }}
     - host: {{ $rule.host.domain }}
     {{- end }}
-#    {{- if not $rule.host }}
-#    - http:
-#    {{- else }}
+    {{- if not $rule.host }}
+    - http:
+    {{- else }}
       http:
-#    {{- end }}
+    {{- end }}
         paths:
-          {{- range $path := $rule.paths }}
+          {{- range $path := $rule.http }}
           - path: {{ $path.path }}
             backend:
               service:
