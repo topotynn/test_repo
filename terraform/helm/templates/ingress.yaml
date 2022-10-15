@@ -9,7 +9,7 @@ metadata:
   {{- end }}
 spec:
   rules:
-    {{- range $rule := $.Values.ingress.annotations.rules }}
+    {{- range $rule := $.Values.ingress.rules }}
     {{- if $rule.host }}
     - host: {{ $rule.host.domain }}
     {{- end }}
