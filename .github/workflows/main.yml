@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       layer:
-        type: environment
+        type: string
         description: Select the environment
         required: true
 #      boolean:
@@ -26,6 +26,6 @@ jobs:
 
       - name: greet
         run: |
-          echo "environment is ${{ github.event.inputs.environment }} / ${{ inputs.environment }}"
-          echo "boolean is ${{ github.event.inputs.boolean }}" / ${{ inputs.boolean }}
-          echo "choice is ${{ github.event.inputs.choice }}" / ${{ inputs.choice }}
+          echo "environment is ${{ github.event.inputs.layer }} / ${{ inputs.layer }}"
+#          echo "boolean is ${{ github.event.inputs.boolean }}" / ${{ inputs.boolean }}
+#          echo "choice is ${{ github.event.inputs.choice }}" / ${{ inputs.choice }}
