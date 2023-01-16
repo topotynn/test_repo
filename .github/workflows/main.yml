@@ -3,9 +3,10 @@ name: CI
 on:
   workflow_dispatch:
     inputs:
-      environment:
+      layer:
         type: environment
         description: Select the environment
+        required: true
 #      boolean:
 #        type: boolean
 #        description: True or False
