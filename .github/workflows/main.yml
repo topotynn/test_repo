@@ -34,4 +34,4 @@ jobs:
 
       - name: Zip it all up and upload
         run: |
-          echo `cat .github/workflows/variables | jq '."${{ inputs.FUNCTION_NAME }}"'`
+          echo `jq -r '."${{ inputs.FUNCTION_NAME }}"' .github/workflows/variables`
