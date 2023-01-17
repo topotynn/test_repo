@@ -46,5 +46,5 @@ jobs:
 
       - name: Zip it all up and upload
         run: |
-          echo "${{ env.ENVIRONMENT }}"
-          echo "${{ env.FUNCTION_NAME }}"
+          echo "${{ inputs.ENVIRONMENT }}"
+          echo "${{ inputs.FUNCTION_NAME }}"
