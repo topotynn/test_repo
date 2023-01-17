@@ -1,31 +1,50 @@
-name: CI
-
+name: Deploy_lambda_function
 on:
   workflow_dispatch:
     inputs:
-      layer:
-        type: string
-        description: Select the environment
-        required: true
-#      boolean:
-#        type: boolean
-#        description: True or False
-#      choice:
-#        type: choice
-#        description: Make a choice
-#        options:
-#        - foo
-#        - bar
-#        - baz
+      ENVIRONMENT:
+        type: 'choice'
+        description: 'Choose the environment'
+        options:
+          - 'production'
+          - 'develop'
+      FUNCTION_NAME:
+        type: 'choice'
+        description: 'Choose the function'
+        options:
+          - 'campanign_managmenet_prod-0044f30'
+          - 'audience_upload_prod-69185d7'
+          - 'appsync_authorizer_prod-61d0ecd'
+          - 'audience_query_prod-3d5c860'
+          - 'whitelisting_prod-f3f110f'
+          - 'dashboard_prod-d45f806'
+
+
+env:
+  AWS_REGION: "us-east-1"
+
 jobs:
-  build:
+  deploy:
+    name: Upload lambda code
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v2
 
-      - name: greet
+#      - name: Configure AWS credentials
+#        uses: aws-actions/configure-aws-credentials@v1.7.0
+#        with:
+#          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#          aws-region: ${{ env.AWS_REGION }}
+
+#      - name: Setup Python 3.9
+#        uses: actions/setup-python@v1
+#        with:
+#          python-version: 3.9
+
+      - name: Zip it all up and upload
         run: |
-          echo "environment is ${{ github.event.inputs.layer }} / ${{ inputs.layer }}"
-#          echo "boolean is ${{ github.event.inputs.boolean }}" / ${{ inputs.boolean }}
-#          echo "choice is ${{ github.event.inputs.choice }}" / ${{ inputs.choice }}
+          echo "${{ env.ENVIRONMENT }}"
+          echo "${{ env.FUNCTION_NAME }}"
