@@ -22,7 +22,11 @@ on:
 
 env:
   AWS_REGION: "us-east-1"
-  prod_env: "this is prod env"
+  prod_env: |
+    {
+      "one": "1",
+      "two": "2"
+    }
 
 
 
@@ -39,3 +43,4 @@ jobs:
         run: |
           echo "${{ env.inputs.ENVIRONMENT }}"
           echo "${{ inputs.FUNCTION_NAME }}"
+          echo ${{ fromJSON(env.prod_env.one) }}
