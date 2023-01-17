@@ -38,4 +38,5 @@ jobs:
           echo `jq -r '."${{ inputs.FUNCTION_NAME }}"' .github/workflows/production`
       - name: develop
         if: inputs.ENVIRONMENT == 'develop'
-        run: | echo `jq -r '."${{ inputs.FUNCTION_NAME }}"' .github/workflows/develop`
+        run: |
+          echo `jq -r '."${{ inputs.FUNCTION_NAME }}"' .github/workflows/develop`
