@@ -32,9 +32,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Zip it all up and upload
-        if inputs.ENVIRONMENT == 'production'
+      - name: production
+        if: inputs.ENVIRONMENT == 'production'
         run: |
           echo `jq -r '."${{ inputs.FUNCTION_NAME }}"' .github/workflows/production`
       - name: develop
-        if inputs.ENVIRONMENT == 'develop'
+        if: inputs.ENVIRONMENT == 'develop'
+        run: | echo `jq -r '."${{ inputs.FUNCTION_NAME }}"' .github/workflows/develop`
