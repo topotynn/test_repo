@@ -27,12 +27,12 @@ jobs:
   deploy:
     name: Upload lambda code
     runs-on: ubuntu-latest
-    env: ${{ fromJSON('{"FAVORITE_FRUIT": "APPLE", "FAVORITE_COLOR": "BLUE"}') }}
 
     steps:
       - name: Checkout
         uses: actions/checkout@v2
 
       - name: Zip it all up and upload
+        env: ${{ fromJSON('{"FAVORITE_FRUIT": "APPLE", "FAVORITE_COLOR": "BLUE"}') }}
         run: |
           echo "${FAVORITE_FRUIT}"
