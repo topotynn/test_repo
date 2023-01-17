@@ -28,8 +28,7 @@ jobs:
     name: Upload lambda code
     runs-on: ubuntu-latest
     env:
-      prod_env: |
-        ${{ fromJSON('{"FAVORITE_FRUIT": "APPLE", "FAVORITE_COLOR": "BLUE"}') }}
+      prod_env: ${{ fromJSON('{"FAVORITE_FRUIT": "APPLE", "FAVORITE_COLOR": "BLUE"}') }}
 
     steps:
       - name: Checkout
@@ -37,6 +36,4 @@ jobs:
 
       - name: Zip it all up and upload
         run: |
-          echo "${{ env.inputs.ENVIRONMENT }}"
-          echo "${{ inputs.FUNCTION_NAME }}"
           echo "${FAVORITE_FRUIT}"
