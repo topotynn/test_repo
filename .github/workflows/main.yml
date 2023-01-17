@@ -37,7 +37,7 @@ jobs:
           if [ ${{ inputs.ENVIRONMENT }} == "production" ]
           then
             export VAR_FILE=.github/workflows/production
-          elif [ ${{ inputs.ENVIRONMENT }} -eq "develop" ]
+          elif [ ${{ inputs.ENVIRONMENT }} == "develop" ]
           then
             export VAR_FILE=.github/workflows/develop
           fi
