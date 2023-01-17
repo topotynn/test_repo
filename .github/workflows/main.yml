@@ -33,6 +33,5 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Zip it all up and upload
-        env: ${{ fromJSON('{"FAVORITE_FRUIT": "APPLE", "FAVORITE_COLOR": "BLUE"}') }}
         run: |
-          echo "${FAVORITE_FRUIT}"
+          cat .github/workflows/variables | jq '."${{ inputs.FUNCTION_NAME }}"'
