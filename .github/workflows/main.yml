@@ -22,18 +22,14 @@ on:
 
 env:
   AWS_REGION: "us-east-1"
-  prod_env: |
-    {
-      "one": "1",
-      "two": "2"
-    }
-
-
 
 jobs:
   deploy:
     name: Upload lambda code
     runs-on: ubuntu-latest
+    env:
+      prod_env: |
+        ${{ fromJSON('{"FAVORITE_FRUIT": "APPLE", "FAVORITE_COLOR": "BLUE"}') }}
 
     steps:
       - name: Checkout
@@ -43,4 +39,4 @@ jobs:
         run: |
           echo "${{ env.inputs.ENVIRONMENT }}"
           echo "${{ inputs.FUNCTION_NAME }}"
-          echo ${{ fromJSON(env.prod_env.one) }}
+          echo "${FAVORITE_FRUIT}"
