@@ -12,12 +12,8 @@ on:
         type: 'choice'
         description: 'Choose the function'
         options:
-          - 'campanign_managmenet'
-          - 'audience_upload'
-          - 'appsync_authorizer'
-          - 'audience_query'
-          - 'whitelisting'
-          - 'dashboard'
+          - 'DependenciesLayer'
+          - 'UtilsLayer'
 
 
 env:
@@ -34,9 +30,6 @@ jobs:
 
       - name: Deployment
         run: |
-          export FUNCTION_NAME=`jq -r '.${{ inputs.ABSTRACT_NAME }}.name.${{ inputs.ENVIRONMENT }}' \
-          ./.github/workflows/lambda_var`
-          export FUNCTION_PATH=`jq -r '.${{ inputs.ABSTRACT_NAME }}.path' \
-          ./.github/workflows/lambda_var`
-          echo "name is: ${FUNCTION_NAME}"
-          echo "path is: ${FUNCTION_PATH}"
+          export LAYER_NAME=`jq -r '.${{ inputs.ABSTRACT_NAME }}.name.${{ inputs.ENVIRONMENT }}' \
+          ./.github/workflows/lambda_layer_var`
+          echo "name is: ${LAYER_NAME}"

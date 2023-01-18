@@ -1,0 +1,14 @@
+{
+  "UtilsLayer": {
+    "name": {
+      "production": "UtilsLayer_prod",
+      "develop": "UtilsLayer"
+    }
+  },
+  "DependenciesLayer": {
+    "name": {
+      "production": "DependenciesLayer_prod",
+      "develop": "DependenciesLayer"
+    }
+  }
+}
