@@ -12,8 +12,12 @@ on:
         type: 'choice'
         description: 'Choose the function'
         options:
-          - 'DependenciesLayer'
-          - 'UtilsLayer'
+          - 'campanign_managmenet'
+          - 'audience_upload'
+          - 'appsync_authorizer'
+          - 'audience_query'
+          - 'whitelisting'
+          - 'dashboard'
 
 
 env:
