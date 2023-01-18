@@ -8,16 +8,16 @@ on:
         options:
           - 'production'
           - 'develop'
-      FUNCTION_NAME:
+      ABSTRACT_NAME:
         type: 'choice'
         description: 'Choose the function'
         options:
-          - 'campanign_managmenet_prod-0044f30'
-          - 'audience_upload_prod-69185d7'
-          - 'appsync_authorizer_prod-61d0ecd'
-          - 'audience_query_prod-3d5c860'
-          - 'whitelisting_prod-f3f110f'
-          - 'dashboard_prod-d45f806'
+          - 'campanign_managmenet'
+          - 'audience_upload'
+          - 'appsync_authorizer'
+          - 'audience_query'
+          - 'whitelisting'
+          - 'dashboard'
 
 
 env:
@@ -34,11 +34,9 @@ jobs:
 
       - name: Deployment
         run: |
-          if [ ${{ inputs.ENVIRONMENT }} == "production" ]
-          then
-            export VAR_FILE=.github/workflows/production
-          elif [ ${{ inputs.ENVIRONMENT }} == "develop" ]
-          then
-            export VAR_FILE=.github/workflows/develop
-          fi
-          echo `jq -r '."${{ inputs.FUNCTION_NAME }}"' ${VAR_FILE}`
+          export FUNCTION_NAME=`jq -r '.${{ inputs.ABSTRACT_NAME }}.name.${{ inputs.ENVIRONMENT }}' \
+          ./.github/workflows/lambda_var`
+          export FUNCTION_PATH=`jq -r '.${{ inputs.ABSTRACT_NAME }}.path' \
+          ./.github/workflows/lambda_var`
+          echo "name is: ${FUNCTION_NAME}"
+          echo "path is: ${FUNCTION_PATH}"

@@ -1,0 +1,44 @@
+{
+  "audience_upload": {
+    "name": {
+      "production": "audience_upload_prod-69185d7",
+      "develop": "audience-upload-function"
+    },
+    "path": "audience_upload"
+  },
+  "audience_query": {
+    "name": {
+      "production": "audience_query_prod-3d5c860",
+      "develop": "audience-query-function"
+    },
+    "path": "audience_querying"
+  },
+  "dashboard": {
+    "name": {
+      "production": "dashboard_prod-d45f806",
+      "develop": "dashboard-function"
+    },
+    "path": "dashboard"
+  },
+  "campanign_managmenet": {
+    "name": {
+      "production": "campanign_managmenet_prod-0044f30",
+      "develop": "campaign_management"
+    },
+    "path": "campaign_management"
+  },
+  "whitelisting": {
+    "name": {
+      "production": "whitelisting_prod-f3f110f",
+      "develop": "whitelisting"
+    },
+    "path": "whitelisting"
+  },
+  "appsync_authorizer": {
+    "name": {
+      "production": "appsync_authorizer_prod-61d0ecd",
+      "develop": "appsync_authorizer_dev"
+    },
+    "path": "appsync_authorizer"
+  }
+}
