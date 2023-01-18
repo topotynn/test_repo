@@ -17,7 +17,9 @@ on:
 
 
 env:
-  AWS_REGION: "us-east-1"
+  ABSTRACT_LAYER_NAME_1: "UtilsLayer"
+  ABSTRACT_LAYER_NAME_2: "DependenciesLayer"
+  AWS_LAYER_ARN: "arn:aws:lambda:us-east-1:336392948345:layer:AWSSDKPandas-Python39:3"
 
 jobs:
   deploy:
@@ -30,6 +32,12 @@ jobs:
 
       - name: Deployment
         run: |
-          export LAYER_NAME=`jq -r '.${{ inputs.ABSTRACT_NAME }}.name.${{ inputs.ENVIRONMENT }}' \
+          export FUNCTION_NAME=`jq -r '.${{ inputs.ABSTRACT_NAME }}.name.${{ inputs.ENVIRONMENT }}' \
+          ./.github/workflows/lambda_var`
+          export LAYER_NAME_1=`jq -r '.${{ env.ABSTRACT_LAYER_NAME_1 }}.name.${{ inputs.ENVIRONMENT }}' \
           ./.github/workflows/lambda_layer_var`
-          echo "name is: ${LAYER_NAME}"
+          export LAYER_NAME_2=`jq -r '.${{ env.ABSTRACT_LAYER_NAME_2 }}.name.${{ inputs.ENVIRONMENT }}' \
+          ./.github/workflows/lambda_layer_var`
+          echo "LAYER_NAME_1 is: ${LAYER_NAME_1}"
+          echo "FUNCTION_NAME is: ${FUNCTION_NAME}"
+          echo "LAYER_NAME_2 is: ${LAYER_NAME_2}"
