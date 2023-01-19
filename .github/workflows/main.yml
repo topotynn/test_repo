@@ -1,18 +1,17 @@
 name: Deploy_lambda_function
 on:
   workflow_dispatch:
-    inputs:
-      ABSTRACT_NAME:
-        type: 'choice'
-        description: 'Choose the function'
-        options:
-          - '5e1d6d7290a821485dd36e72078065e47ae1a4f5'
-          - 'second'
-
+#    inputs:
+#      ABSTRACT_NAME:
+#        type: 'choice'
+#        description: 'Choose the function'
+#        options:
+#          - 'f2eb7bf0762d9530e5bf7a272fa86cefa4c67752'
+#          - '5e1d6d7290a821485dd36e72078065e47ae1a4f5'
 
 env:
-  ABSTRACT_LAYER_NAME_1: "UtilsLayer"
-  ABSTRACT_LAYER_NAME_2: "DependenciesLayer"
+  FIRST: 'f2eb7bf0762d9530e5bf7a272fa86cefa4c67752'
+  SECOND: '5e1d6d7290a821485dd36e72078065e47ae1a4f5'
   AWS_LAYER_ARN: "arn:aws:lambda:us-east-1:336392948345:layer:AWSSDKPandas-Python39:3"
 
 jobs:
@@ -23,15 +22,18 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+        with:
+          ref: ${{ env.FIRST }}
 
-      - name: Deployment
+      - name: print first
         run: |
-          export FUNCTION_NAME=`jq -r '.${{ inputs.ABSTRACT_NAME }}.name.${{ inputs.ENVIRONMENT }}' \
-          ./.github/workflows/lambda_var`
-          export LAYER_NAME_1=`jq -r '.${{ env.ABSTRACT_LAYER_NAME_1 }}.name.${{ inputs.ENVIRONMENT }}' \
-          ./.github/workflows/lambda_layer_var`
-          export LAYER_NAME_2=`jq -r '.${{ env.ABSTRACT_LAYER_NAME_2 }}.name.${{ inputs.ENVIRONMENT }}' \
-          ./.github/workflows/lambda_layer_var`
-          echo "LAYER_NAME_1 is: ${LAYER_NAME_1}"
-          echo "FUNCTION_NAME is: ${FUNCTION_NAME}"
-          echo "LAYER_NAME_2 is: ${LAYER_NAME_2}"
+          cat ./checkout
+
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ env.SECOND }}
+
+      - name: print second
+        run: |
+          cat ./checkout
