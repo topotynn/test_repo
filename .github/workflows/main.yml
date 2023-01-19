@@ -6,7 +6,7 @@ on:
         type: 'choice'
         description: 'Choose the function'
         options:
-          - 'fist'
+          - '5e1d6d7290a821485dd36e72078065e47ae1a4f5'
           - 'second'
 
 
