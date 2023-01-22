@@ -43,7 +43,7 @@ jobs:
           then
             python .github/workflows/testing.py ${{ secrets.POSTMAN_TOKEN }}
           fi
-          git log -2 --format=format:"%H"
+          git log -2
 
       - name: check rollback
         run: |
