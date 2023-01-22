@@ -84,5 +84,7 @@ response = send_request(url=url_dev,
 
 if check_response(response):
     print("OK")
+    sys.exit(0)
 else:
     print("ERROR")
+    sys.exit(1)
