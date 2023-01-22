@@ -34,10 +34,10 @@ jobs:
         run: |
           if [ ${{ inputs.TOKEN }} == 'dev' ]
           then
-            python ./testing.py ${{ secrets.DEV_TOKEN }}
+            python .github/workflows/testing.py ${{ secrets.DEV_TOKEN }}
           elif [ ${{ inputs.TOKEN }} == 'postman' ]
           then
-            python ./testing.py ${{ secrets.POSTMAN_TOKEN }}
+            python .github/workflows/testing.py ${{ secrets.POSTMAN_TOKEN }}
           fi
 
 #      - name: Checkout
