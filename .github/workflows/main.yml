@@ -41,6 +41,10 @@ jobs:
             python .github/workflows/testing.py ${{ secrets.POSTMAN_TOKEN }}
           fi
 
+      - name: check rollback
+        run: |
+          echo ${{ env.ROLLBACK }}
+
 #      - name: Checkout
 #        uses: actions/checkout@v3
 #        with:

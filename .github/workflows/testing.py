@@ -1,6 +1,7 @@
 import json
 import sys
 import requests
+import os
 
 token = sys.argv[1]
 header = {
@@ -77,6 +78,12 @@ def check_response(response):
     return result
 
 
+def write_get_var(status):
+    env_file = os.getenv('GITHUB_ENV')
+    with open(env_file, "a") as myfile:
+        myfile.write(f"ROLLBACK={status}")
+
+
 data = read_request_bodies()
 response = send_request(url=url_dev,
                         json_data=data['dashboard_info'],
@@ -84,7 +91,7 @@ response = send_request(url=url_dev,
 
 if check_response(response):
     print("OK")
-    sys.exit(0)
+    write_get_var(False)
 else:
     print("ERROR")
-    sys.exit(1)
+    write_get_var(True)
