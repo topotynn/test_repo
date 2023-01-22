@@ -81,7 +81,7 @@ def check_response(response):
 def write_get_var(status):
     env_file = os.getenv('GITHUB_ENV')
     with open(env_file, "a") as myfile:
-        myfile.write(f"ROLLBACK={status}")
+        myfile.write(f"ROLLBACK={status}\n")
 
 
 data = read_request_bodies()
