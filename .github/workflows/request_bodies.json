@@ -1,0 +1,260 @@
+{
+  "audience_address_list": [
+"{",
+"audience_address_list(audience_id: \"8d56b083768dea1e0b75d492d86a500e\")",
+"}"
+  ],
+  "audience_list": [
+"{",
+"audience_list(audience_type: \"audience\") {",
+"audience_id",
+"name",
+"creation_date",
+"chain",
+"audience_address_amount",
+"}",
+"}"
+  ],
+  "campaign_list": [
+"{",
+"campaign_list {",
+"end_date",
+"acquired_users",
+"status",
+"revenue",
+"owner",
+"budget",
+"target_contract",
+"}",
+"}"
+  ],
+  "campaign_list_summary": [
+"{",
+"campaign_list {",
+"campaign_summary {",
+"num_wallet_addresses",
+"revenue",
+"num_acquired_wallets",
+"market_share",
+"conversion_rate",
+"}",
+"}",
+"}"
+  ],
+  "campaign_tracking_info": [
+"{",
+"campaign_tracking_info(campaign_id: \"XFgN75rqwY3WTVWOZ6bxXb\") {",
+"start_date",
+"end_date",
+"status",
+"campaign_id",
+"name",
+"}",
+"}"
+  ],
+  "campaign_tracking_info_profiles": [
+"{",
+"campaign_tracking_info(campaign_id: \"XFgN75rqwY3WTVWOZ6bxXb\") {",
+"acquired_customers_profiles {",
+"name",
+"value",
+"}",
+"}",
+"}"
+  ],
+  "campaign_tracking_info_summary": [
+"{",
+"campaign_tracking_info(campaign_id: \"XFgN75rqwY3WTVWOZ6bxXb\") {",
+"campaign_summary {",
+"num_wallet_addresses",
+"revenue",
+"num_acquired_wallets",
+"market_share",
+"conversion_rate",
+"}",
+"}",
+"}"
+  ],
+  "campaign_tracking_info_cexs": [
+"{",
+"campaign_tracking_info(campaign_id: \"XFgN75rqwY3WTVWOZ6bxXb\") {",
+"cexs_worked_with {",
+"name",
+"value",
+"}",
+"}",
+"}"
+  ],
+  "campaign_tracking_info_daily_users": [
+"{",
+"campaign_tracking_info(campaign_id: \"XFgN75rqwY3WTVWOZ6bxXb\") {",
+"graphs {",
+"daily_activated_users_graph {",
+"x",
+"y",
+"}",
+"}",
+"}",
+"}"
+  ],
+  "campaign_tracking_info_daily_buying_power": [
+"{",
+"campaign_tracking_info(campaign_id: \"XFgN75rqwY3WTVWOZ6bxXb\") {",
+"graphs {",
+"daily_buying_power_graph {",
+"x",
+"y",
+"}",
+"}",
+"}",
+"}"
+  ],
+  "campaign_tracking_info_months_since_creation": [
+"{",
+"campaign_tracking_info(campaign_id: \"XFgN75rqwY3WTVWOZ6bxXb\") {",
+"months_since_creation {",
+"name",
+"value",
+"}",
+"}",
+"}"
+  ],
+  "campaign_tracking_info_quick": [
+"{",
+"campaign_tracking_info(campaign_id: \"XFgN75rqwY3WTVWOZ6bxXb\") {",
+"quick_campaign {",
+"activated_vip",
+"activated",
+"not_activated",
+"not_activated_vip",
+"}",
+"}",
+"}"
+  ],
+  "dashboard_info": [
+"{",
+"dashboard_info(audience_id: \"8d56b083768dea1e0b75d492d86a500e\") {",
+"reactivation",
+"recovering_non_vip",
+"recovering_vip",
+"churned_users",
+"last_updated",
+"}",
+"}"
+  ],
+  "dashboard_info_biggest_spenders": [
+"{",
+"dashboard_info(audience_id: \"8d56b083768dea1e0b75d492d86a500e\") {",
+"biggest_spenders {",
+"new_spenders",
+"spenders {",
+"address",
+"amount",
+"}",
+"}",
+"}",
+"}"
+  ],
+  "dashboard_info_bot_wallets": [
+"{",
+"dashboard_info(audience_id: \"8d56b083768dea1e0b75d492d86a500e\") {",
+"bot_wallets {",
+"past",
+"current",
+"}",
+"}",
+"}"
+  ],
+  "dashboard_info_unique_holders": [
+"{",
+"dashboard_info(audience_id: \"8d56b083768dea1e0b75d492d86a500e\") {",
+"unique_holders {",
+"current {",
+"num_humans",
+"num_wallets",
+"}",
+"past {",
+"num_humans",
+"num_wallets",
+"}",
+"}",
+"}",
+"}"
+  ],
+  "dashboard_info_wash_traders": [
+"{",
+"dashboard_info(audience_id: \"8d56b083768dea1e0b75d492d86a500e\") {",
+"wash_traders {",
+"past",
+"current",
+"}",
+"}",
+"}"
+  ],
+  "export_biggest_spenders": [
+"{",
+"export_biggest_spenders(audience_id: \"8d56b083768dea1e0b75d492d86a500e\", spending_thresh: 10, total_balance_thresh: 10) {",
+"address",
+"amount",
+"}",
+"}"
+  ],
+  "export_bot_wallets": [
+"{",
+"export_bot_wallets(audience_id: \"8d56b083768dea1e0b75d492d86a500e\")",
+"}"
+  ],
+  "export_campaign_tracking_pie_chart_slice": [
+"{",
+"export_campaign_tracking_pie_chart_slice(campaign_id: \"XFgN75rqwY3WTVWOZ6bxXb\", chart_type: \"acquired_customers_profiles\", slice_name: \"paper_hands\")",
+"}"
+  ],
+  "export_churned_users": [
+"{",
+"export_churned_users(audience_id: \"8d56b083768dea1e0b75d492d86a500e\", past_holders_thresh: 10)",
+"}"
+  ],
+  "export_reactivation": [
+"{",
+"export_reactivation(audience_id: \"8d56b083768dea1e0b75d492d86a500e\", days_since_last_tx_with_token_thresh: 10, spent_on_category_last_30d_thresh: 10, total_balance_thresh: 10)",
+"}"
+  ],
+  "export_recovering_non_vip": [
+"{",
+"export_recovering_non_vip(audience_id: \"8d56b083768dea1e0b75d492d86a500e\", spent_on_category_last_30d_thresh: 10, total_balance_thresh: 10)",
+"}"
+  ],
+  "export_recovering_vip": [
+"{",
+"export_recovering_vip(audience_id: \"8d56b083768dea1e0b75d492d86a500e\", spent_on_category_last_30d_thresh: 10, total_balance_thresh: 10)",
+"}"
+  ],
+  "export_unique_wallets": [
+"{",
+"export_unique_wallets(audience_id: \"8d56b083768dea1e0b75d492d86a500e\")",
+"}"
+  ],
+  "export_wash_traders": [
+"{",
+"export_wash_traders(audience_id: \"8d56b083768dea1e0b75d492d86a500e\", max_wash_tradings_thresh: 10, num_wash_trade_thresh: 10)",
+"}"
+  ],
+  "export_whitelist": [
+"{",
+"export_whitelist(filters_list: {name: \"is_dormant\", thresh: 1.5}, audience_id: \"216f30c3803fbd2ce12eb364d2cf251c\")",
+"}"
+  ],
+  "tenants_contracts": [
+"{",
+"tenants_contracts {",
+"contract",
+"chain",
+"}",
+"}"
+  ],
+  "whitelisting": [
+"{",
+"whitelisting(audience_id: \"216f30c3803fbd2ce12eb364d2cf251c\", filters_list: {name: \"is_gamer\", thresh: 1.5})",
+"}"
+  ]
+}
