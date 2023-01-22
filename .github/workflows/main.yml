@@ -32,7 +32,7 @@ jobs:
 
       - name: run testing script
         run: |
-          if ${{ inputs.TOKEN }} == 'dev'
+          if "${{ inputs.TOKEN }}" == 'dev'
           then
             python ./testing.py ${{ secrets.DEV_TOKEN }}
           elif ${{ inputs.TOKEN }} == 'postman'
