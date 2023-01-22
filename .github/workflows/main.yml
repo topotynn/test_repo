@@ -32,6 +32,7 @@ jobs:
 
       - name: run testing script
         run: |
+          pip3 install requests
           if [ ${{ inputs.TOKEN }} == 'dev' ]
           then
             python .github/workflows/testing.py ${{ secrets.DEV_TOKEN }}
