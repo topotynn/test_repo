@@ -11,7 +11,7 @@ header = {
 url_prod = 'https://dh3onmef7bhrhkyvw7uqeoczh4.appsync-api.us-east-1.amazonaws.com/graphql'
 url_dev = 'https://ry4dsee7fbgrvmkw67vybrra3i.appsync-api.us-east-1.amazonaws.com/graphql'
 request_list = [
-    # "audience_address_list",
+    "audience_address_list",
     # "audience_list",
     # "campaign_list",
     # "campaign_list_summary",
@@ -89,10 +89,10 @@ for request in request_list:
     response = send_request(url=url_dev,
                             json_data=data[request],
                             header=header)
+    write_get_var(False)
     print(request)
     if check_response(response):
         print("OK")
-        write_get_var(False)
     else:
         print("ERROR")
         write_get_var(True)
