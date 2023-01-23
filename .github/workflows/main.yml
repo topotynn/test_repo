@@ -47,7 +47,7 @@ jobs:
           fi
           echo "ROLLBACK_HASH=$(git log -2 --format=format:'%H' | tail -1)" >> $GITHUB_ENV
           cat $GITHUB_ENV
-          echo "it is :${ROLLBACK}"
+          echo "it is :$ROLLBACK"
 
       - name: check rollback
         if: env.ROLLBACK == 'True' && inputs.TESTING
