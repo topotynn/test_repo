@@ -4,14 +4,13 @@ import requests
 import os
 
 token = sys.argv[1]
+appsync_url = sys.argv[2]
 header = {
     "Authorization": token,
     "Content-Type": "application/graphql"
 }
-url_prod = 'https://dh3onmef7bhrhkyvw7uqeoczh4.appsync-api.us-east-1.amazonaws.com/graphql'
-url_dev = 'https://ry4dsee7fbgrvmkw67vybrra3i.appsync-api.us-east-1.amazonaws.com/graphql'
 request_list = [
-    "audience_address_list",
+    # "audience_address_list",
     # "audience_list",
     # "campaign_list",
     # "campaign_list_summary",
@@ -23,7 +22,7 @@ request_list = [
     # "campaign_tracking_info_daily_buying_power",
     # "campaign_tracking_info_months_since_creation",
     # "campaign_tracking_info_quick",
-    "dashboard_info",
+    # "dashboard_info",
     # "dashboard_info_biggest_spenders",
     # "dashboard_info_bot_wallets",
     # "dashboard_info_unique_holders",
@@ -44,7 +43,7 @@ request_list = [
 
 
 def read_request_bodies():
-    with open('./request_bodies.json', 'r') as file:
+    with open('./testing/request_bodies.json', 'r') as file:
         file = file.read()
         data = json.loads(file)
     return data
@@ -86,10 +85,9 @@ def write_get_var(status):
 
 for request in request_list:
     data = read_request_bodies()
-    response = send_request(url=url_dev,
+    response = send_request(url=appsync_url,
                             json_data=data[request],
                             header=header)
-    # write_get_var(False)
     print(request)
     if check_response(response):
         print("OK")

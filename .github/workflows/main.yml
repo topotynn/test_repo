@@ -15,9 +15,8 @@ on:
 
 
 env:
-  FIRST: 'f2eb7bf0762d9530e5bf7a272fa86cefa4c67752'
-  SECOND: '5e1d6d7290a821485dd36e72078065e47ae1a4f5'
-  AWS_LAYER_ARN: "arn:aws:lambda:us-east-1:336392948345:layer:AWSSDKPandas-Python39:3"
+  APPSYNC_DEV_URL: 'https://ry4dsee7fbgrvmkw67vybrra3i.appsync-api.us-east-1.amazonaws.com/graphql'
+  APPSYNC_PROD_URL: 'https://dh3onmef7bhrhkyvw7uqeoczh4.appsync-api.us-east-1.amazonaws.com/graphql'
 
 jobs:
   deploy:
@@ -35,18 +34,16 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.sha }}
           fetch-depth: 2
-#        with:
-#          ref: ${{ env.FIRST }}
 
       - name: run testing script
         run: |
           pip3 install requests
           if [ ${{ inputs.TOKEN }} == 'dev' ]
           then
-            python .github/workflows/testing.py ${{ secrets.DEV_TOKEN }}
+            python ./testing/testing.py ${{ secrets.DEV_TOKEN }} ${{ inputs.APPSYNC_DEV_URL }}
           elif [ ${{ inputs.TOKEN }} == 'postman' ]
           then
-            python .github/workflows/testing.py ${{ secrets.POSTMAN_TOKEN }}
+            python ./testing/testing.py ${{ secrets.POSTMAN_TOKEN }} ${{ inputs.APPSYNC_PROD_URL }}
           fi
           echo "ROLLBACK_HASH=$(git log -2 --format=format:'%H' | tail -1)" >> $GITHUB_ENV
           cat $GITHUB_ENV
