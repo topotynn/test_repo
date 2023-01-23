@@ -89,7 +89,7 @@ for request in request_list:
     response = send_request(url=url_dev,
                             json_data=data[request],
                             header=header)
-    print(requst)
+    print(request)
     if check_response(response):
         print("OK")
         write_get_var(False)
