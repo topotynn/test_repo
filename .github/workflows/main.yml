@@ -43,7 +43,7 @@ jobs:
             python ./testing/testing.py ${{ secrets.DEV_TOKEN }} ${{ env.APPSYNC_DEV_URL }}
           elif [ ${{ inputs.TOKEN }} == 'postman' ]
           then
-            python ./testing/testing.py ${{ secrets.POSTMAN_TOKEN }} ${{ env.APPSYNC_PROD_URL }}
+            python ./testing/testing.py ${{ secrets.POSTMAN_TOKEN }} ${{ env.APPSYNC_DEV_URL }}
           fi
           echo "ROLLBACK_HASH=$(git log -2 --format=format:'%H' | tail -1)" >> $GITHUB_ENV
           cat $GITHUB_ENV
