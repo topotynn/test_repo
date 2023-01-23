@@ -57,7 +57,7 @@ jobs:
 
       - name: set a github action status
         run: |
-          if [ $ROLLBACK == 'True' ]
+          if [ $ROLLBACK == 'False' ]
           then
             exit 1
           fi
