@@ -8,6 +8,11 @@ on:
        options:
          - 'dev'
          - 'postman'
+    TESTING:
+      type: boolean
+      description: 'Do you want to test a lambda functon code?'
+      default: true
+
 
 env:
   FIRST: 'f2eb7bf0762d9530e5bf7a272fa86cefa4c67752'
@@ -48,7 +53,7 @@ jobs:
           echo ${{ env.ROLLBACK }}
 
       - name: check rollback
-        if: env.ROLLBACK == 'True'
+        if: env.ROLLBACK == 'True' && inputs.TESTING
         uses: actions/checkout@v3
         with:
           ref: ${{ ENV.ROLLBACK_HASH }}
