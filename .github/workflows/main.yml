@@ -8,10 +8,10 @@ on:
        options:
          - 'dev'
          - 'postman'
-    TESTING:
-      type: boolean
-      description: 'Do you want to test a lambda functon code?'
-      default: true
+     TESTING:
+       type: boolean
+       description: 'Do you want to test a lambda functon code?'
+       default: true
 
 
 env:
