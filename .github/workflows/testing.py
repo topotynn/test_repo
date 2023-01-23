@@ -84,14 +84,15 @@ def write_get_var(status):
         myfile.write(f"ROLLBACK={status}\n")
 
 
-data = read_request_bodies()
-response = send_request(url=url_dev,
-                        json_data=data['dashboard_info'],
-                        header=header)
-
-if check_response(response):
-    print("OK")
-    write_get_var(False)
-else:
-    print("ERROR")
-    write_get_var(True)
+for request in request_list:
+    data = read_request_bodies()
+    response = send_request(url=url_dev,
+                            json_data=data[request],
+                            header=header)
+    if check_response(response):
+        print("OK")
+        write_get_var(False)
+    else:
+        print("ERROR")
+        write_get_var(True)
+        break

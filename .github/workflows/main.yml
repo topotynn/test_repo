@@ -56,12 +56,3 @@ jobs:
       - name: show rollback hash
         run: |
           git log -2
-
-#      - name: Checkout
-#        uses: actions/checkout@v3
-#        with:
-#          ref: ${{ env.SECOND }}
-#
-#      - name: print second
-#        run: |
-#          cat ./checkout
