@@ -4,7 +4,12 @@
       "production": "audience_upload_prod-69185d7",
       "develop": "audience-upload-function"
     },
-    "path": "audience_upload"
+    "path": "audience_upload",
+    layers: [
+      "one",
+      "two",
+      "three"
+    ]
   },
   "audience_query": {
     "name": {
