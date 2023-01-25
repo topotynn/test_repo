@@ -5,7 +5,7 @@
       "develop": "audience-upload-function"
     },
     "path": "audience_upload",
-    layers: [
+    "layers": [
       "one",
       "two",
       "three"
