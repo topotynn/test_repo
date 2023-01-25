@@ -27,4 +27,4 @@ jobs:
           readarray -t layer_list < <(jq -r .audience_upload.layers[] ./.github/workflows/lambda_var)
           declare -a layer_arn_list
           for var in ${layer_list[*]}; do layer_arn_list+=($(echo "layer_arn_is_$var")); done
-          for var in ${layer_arn_list[*]}; do echo $var; done
+          echo "my layers is: ${layer_arn_list[*]}"
