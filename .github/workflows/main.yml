@@ -28,8 +28,10 @@ jobs:
           declare -a layer_arn_list
           for var in ${layer_list[*]}; do layer_arn_list+=($(echo "layer_arn_is_$var")); done
           echo "my layers is: ${layer_arn_list[*]}"
+          echo "APPSYNC_ID_NEW=$(echo 'global')" >> $GITHUB_ENV
 
       - name: Show variables
         run: |
           echo "GitHub branch: ${{ github.ref_name }}"
           echo "AppSync name: ${{ inputs.TOKEN }}"
+          echo ${{ APPSYNC_ID_NEW }}
