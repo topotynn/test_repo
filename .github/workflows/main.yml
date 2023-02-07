@@ -28,3 +28,7 @@ jobs:
           declare -a layer_arn_list
           for var in ${layer_list[*]}; do layer_arn_list+=($(echo "layer_arn_is_$var")); done
           echo "my layers is: ${layer_arn_list[*]}"
+
+      - name: Show variables
+        run: |
+          echo "GitHub branch: ${{ github.ref_name }}"  
