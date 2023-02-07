@@ -31,4 +31,5 @@ jobs:
 
       - name: Show variables
         run: |
-          echo "GitHub branch: ${{ github.ref_name }}"  
+          echo "GitHub branch: ${{ github.ref_name }}"
+          echo "AppSync name: ${{ inputs.TOKEN }}"
