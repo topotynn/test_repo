@@ -45,4 +45,4 @@ jobs:
           status: ${{ job.status }}
           notification_title: '{workflow} has {status_message}. ${{ env.ERROR_MESSAGE }}'
         env:
-          SLACK_WEBHOOK_URL: ${{ secret.SLACK_WEBHOOK }}
+          SLACK_WEBHOOK_URL: 'https://hooks.slack.com/services/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'
