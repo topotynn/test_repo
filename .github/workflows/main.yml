@@ -35,6 +35,5 @@ jobs:
       - name: run testing script
         run: |
           pip3 install -r ./testing/requirements.txt
-          which pytest
           echo 'Run script'
-          pytest ./testing/apis_sanity_test.py ${{ env.DEV_TOKEN }} ${{ env.APPSYNC_DEV_URL }}
+          python3 -m pytest testing/apis_sanity_test.py ${{ env.DEV_TOKEN }} ${{ env.APPSYNC_DEV_URL }}
