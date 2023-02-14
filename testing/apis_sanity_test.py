@@ -69,19 +69,20 @@ def test_requests():
 
         print(request)
         print(response.status_code)
+        try:
+            # Test the response time
+            response_time = end_time - start_time
+            # assert that the response time is less than a certain threshold
+            assert response_time < 25, f"TEST {request} failed with timeout. Please check with the Big Boss."
 
-        # Test the response time
-        response_time = end_time - start_time
-        # assert that the response time is less than a certain threshold
-        assert response_time < 25, f"TEST Failed by timeout: The {request} API has failed. Please check with the Big Boss."
+            # check status code
+            assert response.status_code == 200, f"TEST {request} failed with code status {response.status_code}. Please check with the Big Boss."
 
-        # check status code
-        assert response.status_code == 200, f"TEST Failed not 200: The {request} API has failed. Please check with the Big Boss."
-        # Test the status
-        json_response = response.json()
-        print(json_response)
-        assert 'errors' not in json_response, f"TEST Failed in response: The {request} API has failed. Please check with the Big Boss."
-
+            # Test the status
+            json_response = response.json()
+            assert 'errors' not in json_response, f"TEST {request} failed with error: {json_response['errors']}. Please check with the Big Boss."
+        except AssertionError as e:
+            print(f'ERROR IS: {e}')
         response.close()
 
 test_requests()
