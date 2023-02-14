@@ -39,3 +39,7 @@ jobs:
           export URI=${{ env.APPSYNC_DEV_URL }}
           echo 'Run script'
           python3 -m pytest ./testing/apis_sanity_test.py
+
+      - name: print error
+        run: |
+          echo ${{ env.ERROR_MESSAGE }}
