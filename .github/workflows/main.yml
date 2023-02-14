@@ -46,6 +46,7 @@ jobs:
           python3 ./testing/apis_sanity_test.py ${{ inputs.TOKEN }} ${{ env.APPSYNC_DEV_URL }}
 
       - name: print error
+        if: always()      
         run:
           echo ${{ env.ERROR_MESSAGE }}
 
