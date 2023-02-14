@@ -82,3 +82,5 @@ def test_requests():
         assert 'errors' not in json_response, f"TEST Failed: The {request} API has failed. Please check with the Big Boss."
 
         response.close()
+
+test_requests()
