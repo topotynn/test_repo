@@ -73,7 +73,7 @@ def test_requests():
         # Test the response time
         response_time = end_time - start_time
         # assert that the response time is less than a certain threshold
-        assert response_time < 25, f"TEST {request} failed with timeout. Please check with the Big Boss."
+        assert response_time < 7, f"TEST {request} failed with timeout. Please check with the Big Boss."
         # check status code
         assert response.status_code == 200, f"TEST {request} failed with code status {response.status_code}. Please check with the Big Boss."
         # Test the status
