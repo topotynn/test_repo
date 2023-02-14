@@ -6,7 +6,7 @@ import time
 
 
 def read_request_bodies():
-    with open('./request_bodies.json', 'r') as file:
+    with open('./testing/request_bodies.json', 'r') as file:
         file = file.read()
         data = json.loads(file)
     return data
