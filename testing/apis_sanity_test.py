@@ -67,6 +67,9 @@ def test_requests():
                                 header=header)
         end_time = time.time()
 
+        print(request)
+        print(response.status_code)
+
         # Test the response time
         response_time = end_time - start_time
         # assert that the response time is less than a certain threshold
