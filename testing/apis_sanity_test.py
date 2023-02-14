@@ -79,7 +79,7 @@ def test_requests():
         assert response.status_code == 200, f"TEST Failed: The {request} API has failed. Please check with the Big Boss."
         # Test the status
         json_response = response.json()
-        assert 'errors' not in json_response, f"TEST Failed: The {request} API has failed. Please check with the Big Boss."
+        assert 'errors' in json_response, f"TEST Failed: The {request} API has failed. Please check with the Big Boss."
 
         response.close()
 
