@@ -1,39 +1,72 @@
-name: Deploy_lambda_function
+name: testing
 on:
+#  schedule:
+#    - cron: '0 * * * *' # every hour on the hour
   workflow_dispatch:
-   inputs:
-     TOKEN:
-       type: 'choice'
-       description: 'Choose the TOKEN'
-       options:
-         - 'dev'
-         - 'postman'
-     TESTING:
-       type: boolean
-       description: 'Do you want to test a lambda functon code?'
-       default: true
+    inputs:
+#      ENVIRONMENT:
+#        type: 'choice'
+#        description: 'Choose the environment'
+#        options:
+#          - 'production'
+#          - 'develop'
+      APPSYNC_URL:
+        type: 'string'
+        description: 'AppSync URI'
+      TOKEN:
+        type: 'string'
+        description: 'AppSync token'
 
+
+env:
+  APPSYNC_DEV_URL: 'https://ry4dsee7fbgrvmkw67vybrra3i.appsync-api.us-east-1.amazonaws.com/graphql'
+  APPSYNC_PROD_URL: 'https://dh3onmef7bhrhkyvw7uqeoczh4.appsync-api.us-east-1.amazonaws.com/graphql'
+  PRODUCTION_TOKEN: ${{ secrets.PRODUCTION_TOKEN }}
+  DEV_TOKEN: ${{ secrets.DEV_TOKEN }}
 jobs:
   deploy:
-    name: Upload lambda code
+    name: testing
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: test array
-        run: |
-          readarray -t layer_list < <(jq -r .audience_upload.layers[] ./.github/workflows/lambda_var)
-          declare -a layer_arn_list
-          for var in ${layer_list[*]}; do layer_arn_list+=($(echo "layer_arn_is_$var")); done
-          echo "my layers is: ${layer_arn_list[*]}"
-          echo "APPSYNC_ID_NEW=$(echo 'global')" >> $GITHUB_ENV
-          export NEW_VAR=new_var
+      - name: Setup Python 3.9
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
 
-      - name: Show variables
+      - name: run testing script
         run: |
-          echo "GitHub branch: ${{ github.ref_name }}"
-          echo "AppSync name: ${{ inputs.TOKEN }}"
-          echo ${{ env.APPSYNC_ID_NEW }}
-          echo ${NEW_VAR}
+          pip3 install -r ./testing/requirements.txt
+          python3 -m pytest testing/apis_sanity_test.py ${{ secrets.DEV_TOKEN }} ${{ env.APPSYNC_DEV_URL }}
+
+
+#      - name: Report Status
+#        if: always()
+#        uses: ravsamhq/notify-slack-action@v1
+#        with:
+#          status: ${{ job.status }}
+#          notification_title: '{workflow} has {status_message}'
+#        env:
+#          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
+
+#      - name: set a github action status
+#        run: |
+#          if [ $ROLLBACK == 'True' ]
+#          then
+#            exit 1
+#          fi
+#  on_failure:
+#    name: Send Email
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Email
+#        uses: actions/email@v1
+#        with:
+##          to: 'shalevamiel@spearai.xyz, ronzaidman@spearai.xyz'
+#          subject: 'Test Failure'
+#          body: 'One or more tests have failed in the job ${{ env.GITHUB_JOB }}.
+#            You can check the logs for more information at https://github.com/OWNER/REPO/actions/runs/${{ env.GITHUB_RUN_ID }}'
+#
