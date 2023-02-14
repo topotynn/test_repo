@@ -4,20 +4,12 @@ on:
 #    - cron: '0 * * * *' # every hour on the hour
   workflow_dispatch:
     inputs:
-#      ENVIRONMENT:
-#        type: 'choice'
-#        description: 'Choose the environment'
-#        options:
-#          - 'production'
-#          - 'develop'
       APPSYNC_URL:
         type: 'string'
         description: 'AppSync URI'
       TOKEN:
         type: 'string'
         description: 'AppSync token'
-      SLACK_WEBHOOK:
-        type: 'string'
 
 
 env:
@@ -25,6 +17,7 @@ env:
   APPSYNC_PROD_URL: 'https://dh3onmef7bhrhkyvw7uqeoczh4.appsync-api.us-east-1.amazonaws.com/graphql'
   PRODUCTION_TOKEN: ${{ secrets.PRODUCTION_TOKEN }}
   DEV_TOKEN: ${{ secrets.DEV_TOKEN }}
+
 jobs:
   deploy:
     name: testing
@@ -43,12 +36,7 @@ jobs:
         run: |
           pip3 install -r ./testing/requirements.txt
           echo 'Run script'
-          python3 ./testing/apis_sanity_test.py ${{ inputs.TOKEN }} ${{ env.APPSYNC_DEV_URL }}
-
-#      - name: print error
-#        if: always()
-#        run:
-#          echo ${{ env.ERROR_MESSAGE }}
+          python3 -m pytest ./testing/apis_sanity_test.py ${{ inputs.TOKEN }} ${{ inputs.APPSYNC_URL }}
 
       - name: Report Status
         if: always()
@@ -57,23 +45,4 @@ jobs:
           status: ${{ job.status }}
           notification_title: '{workflow} has {status_message}. ${{ env.ERROR_MESSAGE }}'
         env:
-          SLACK_WEBHOOK_URL: ${{ inputs.SLACK_WEBHOOK }}
-
-#      - name: set a github action status
-#        run: |
-#          if [ $ROLLBACK == 'True' ]
-#          then
-#            exit 1
-#          fi
-#  on_failure:
-#    name: Send Email
-#    runs-on: ubuntu-latest
-#    steps:
-#      - name: Email
-#        uses: actions/email@v1
-#        with:
-##          to: 'shalevamiel@spearai.xyz, ronzaidman@spearai.xyz'
-#          subject: 'Test Failure'
-#          body: 'One or more tests have failed in the job ${{ env.GITHUB_JOB }}.
-#            You can check the logs for more information at https://github.com/OWNER/REPO/actions/runs/${{ env.GITHUB_RUN_ID }}'
-#
+          SLACK_WEBHOOK_URL: ${{ secret.SLACK_WEBHOOK }}
