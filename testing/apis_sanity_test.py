@@ -59,10 +59,12 @@ def test_requests():
     for request, body in request_bodies.items():
         # Send the request
         print(f"Request Headers: {header}")
-        print(f"Request Body: {json.dumps({'query': request})}")
+        print(f"Request Body: {json.dumps({'query': body})}")
 
         start_time = time.time()
-        response = requests.post(appsync_url, json={"query": body}, headers=header)
+        response = send_request(url=appsync_url,
+                                json_data=body,
+                                header=header)
         end_time = time.time()
 
         # Test the response time
