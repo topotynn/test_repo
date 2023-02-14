@@ -40,7 +40,7 @@ jobs:
       - name: run testing script
         run: |
           pip3 install -r ./testing/requirements.txt
-          python3 -m pytest testing/apis_sanity_test.py ${{ secrets.DEV_TOKEN }} ${{ env.APPSYNC_DEV_URL }}
+          python3 -m pytest ./testing/apis_sanity_test.py ${{ secrets.DEV_TOKEN }} ${{ env.APPSYNC_DEV_URL }}
 
 
 #      - name: Report Status
