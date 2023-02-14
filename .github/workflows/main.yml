@@ -37,12 +37,3 @@ jobs:
           pip3 install -r ./testing/requirements.txt
           echo 'Run script'
           python3 -m pytest ./testing/apis_sanity_test.py ${{ inputs.TOKEN }} ${{ inputs.APPSYNC_URL }}
-
-      - name: Report Status
-        if: always()
-        uses: ravsamhq/notify-slack-action@v2
-        with:
-          status: ${{ job.status }}
-          notification_title: '{workflow} has {status_message}. ${{ env.ERROR_MESSAGE }}'
-        env:
-          SLACK_WEBHOOK_URL: 'https://hooks.slack.com/services/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'
