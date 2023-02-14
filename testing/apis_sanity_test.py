@@ -48,8 +48,8 @@ def write_get_var(text):
 
 # Create a function to test each request
 def test_requests():
-    token = sys.argv[1]
-    appsync_url = sys.argv[2]
+    token = os.environ['ACCEESS_TOKEN']
+    appsync_url = sys.argv[1]
     request_bodies = read_request_bodies()
 
     header = {
@@ -58,8 +58,7 @@ def test_requests():
     }
     for request, body in request_bodies.items():
         # Send the request
-        print(f"Request Headers: {header}")
-        print(f"Request Body: {json.dumps({'query': body})}")
+        # print(f"Request Headers: {header}")
 
         start_time = time.time()
         response = send_request(url=appsync_url,
@@ -68,6 +67,7 @@ def test_requests():
         end_time = time.time()
 
         print(request)
+        print(f"Request Body: {json.dumps({'query': body})}")
         print(response.status_code)
 
         # Test the response time
