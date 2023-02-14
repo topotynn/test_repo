@@ -49,7 +49,7 @@ def write_get_var(text):
 # Create a function to test each request
 def test_requests():
     token = os.environ['ACCEESS_TOKEN']
-    # appsync_url = sys.argv[1]
+    appsync_url = os.environ['URI']
     request_bodies = read_request_bodies()
 
     header = {

@@ -36,5 +36,6 @@ jobs:
         run: |
           pip3 install -r ./testing/requirements.txt
           export ACCEESS_TOKEN=${{ env.DEV_TOKEN }}
+          export URI=${{ env.APPSYNC_DEV_URL }}
           echo 'Run script'
-          python3 -m pytest ./testing/apis_sanity_test.py ${{ env.APPSYNC_DEV_URL }}
+          python3 -m pytest ./testing/apis_sanity_test.py
