@@ -40,10 +40,10 @@ def check_response(response):
     return result
 
 
-def write_get_var(status):
+def write_get_var(text):
     env_file = os.getenv('GITHUB_ENV')
     with open(env_file, "a") as myfile:
-        myfile.write(f"ROLLBACK={status}\n")
+        myfile.write(f"ERROR_MESSAGE='{text}'\n")
 
 
 # Create a function to test each request
@@ -82,7 +82,8 @@ def test_requests():
             json_response = response.json()
             assert 'errors' not in json_response, f"TEST {request} failed with error: {json_response['errors']}. Please check with the Big Boss."
         except AssertionError as e:
-            print(f'ERROR IS: {e}')
+            write_get_var()
+            break
         response.close()
 
 test_requests()
