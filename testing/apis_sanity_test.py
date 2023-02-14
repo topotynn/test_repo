@@ -82,7 +82,7 @@ def test_requests():
             json_response = response.json()
             assert 'errors' not in json_response, f"TEST {request} failed with error: {json_response['errors']}. Please check with the Big Boss."
         except AssertionError as e:
-            write_get_var()
+            write_get_var(e)
             break
         response.close()
 
