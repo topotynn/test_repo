@@ -40,7 +40,11 @@ jobs:
           echo 'Run script'
           python3 -m pytest ./testing/apis_sanity_test.py
 
-      - name: print error
+      - name: Report Status
         if: failure()
-        run: |
-          echo ${{ env.ERROR_MESSAGE }}
+        uses: ravsamhq/notify-slack-action@v2
+        with:
+          status: ${{ job.status }}
+          notification_title: '{workflow} has {status_message}. ${{ env.ERROR_MESSAGE }}'
+        env:
+          SLACK_WEBHOOK_URL: https://hooks.slack.com/services/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
