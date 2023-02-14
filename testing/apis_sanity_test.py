@@ -86,3 +86,4 @@ try:
     test_requests()
 except Exception as e:
     write_get_var(e)
+    sys.exit('1')
