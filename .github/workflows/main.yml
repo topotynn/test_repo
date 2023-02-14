@@ -41,5 +41,6 @@ jobs:
           python3 -m pytest ./testing/apis_sanity_test.py
 
       - name: print error
+        if: failure()
         run: |
           echo ${{ env.ERROR_MESSAGE }}
