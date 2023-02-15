@@ -25,12 +25,12 @@ jobs:
         uses: actions/checkout@v3
 
       - name: run testing №1
-        if: (${{ inputs.ENVIRONMENT }} == 'develop') && ${{ inputs.LAYER_UPDATE }}
+        if: ${{ (inputs.ENVIRONMENT  == 'develop') && inputs.LAYER_UPDATE }}
         run: |
           echo "It is a develop invironmet"
 
       - name: run testing №2
-        if: (${{ inputs.ENVIRONMENT }} == 'production') && ${{ inputs.LAYER_UPDATE }}
+        if: ${{ (inputs.ENVIRONMENT  == 'production') && inputs.LAYER_UPDATE }}
         run: |
           echo "It is a production invironmet"
 
