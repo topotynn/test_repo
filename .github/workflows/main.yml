@@ -43,8 +43,7 @@ jobs:
           python3 -m pytest ./testing/apis_sanity_test.py
 
       - name: Report Status
-        #if: failure()
-        if: always()
+        if: failure()
         uses: ravsamhq/notify-slack-action@v2
         with:
           status: ${{ job.status }}

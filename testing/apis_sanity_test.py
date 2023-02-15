@@ -80,10 +80,3 @@ def test_requests():
         json_response = response.json()
         assert 'errors' not in json_response, f"TEST {request} failed with error: {json_response['errors']}. Please check with the Big Boss."
         response.close()
-
-
-try:
-    test_requests()
-except Exception as e:
-    write_get_var(e)
-    sys.exit('1')
