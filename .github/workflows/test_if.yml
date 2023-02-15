@@ -35,6 +35,6 @@ jobs:
           echo "It is a production invironmet"
 
       - name: run testing №3
-        if: !${{ inputs.LAYER_UPDATE }}
+        if: not ${{ inputs.LAYER_UPDATE }}
         run: |
-          echo "LAST TEST"        
+          echo "LAST TEST"
