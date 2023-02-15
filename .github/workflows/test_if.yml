@@ -1,0 +1,40 @@
+name: test_if
+on:
+#  schedule:
+#    - cron: '0 * * * *' # every hour on the hour
+  workflow_dispatch:
+    inputs:
+      ENVIRONMENT:
+        type: 'choice'
+        description: 'Choose the environment'
+        options:
+          - 'production'
+          - 'develop'
+      LAYER_UPDATE:
+        type: boolean
+        description: 'Do you want to update a lambda layer code?'
+        default: true
+
+jobs:
+  deploy:
+    name: testing
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: run testing №1
+        if: ${{ inputs.ENVIRONMENT }} == 'develop' && ${{ inputs.LAYER_UPDATE }}
+        run: |
+        echo "It is a develop invironmet"
+
+      - name: run testing №2
+        if: ${{ inputs.ENVIRONMENT }} == 'production' && ${{ inputs.LAYER_UPDATE }}
+        run: |
+        echo "It is a production invironmet"
+
+      - name: run testing №3
+        if: !${{ inputs.LAYER_UPDATE }}
+        run: |
+        echo "LAST TEST"        
