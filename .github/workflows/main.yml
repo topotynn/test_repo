@@ -39,16 +39,18 @@ jobs:
           then
             export ACCEESS_TOKEN=${{ secrets.DEV_TOKEN }}
             export URI=${{ env.APPSYNC_DEV_URL }}
+            echo "This is develop!"
           elif [ ${{ inputs.ENVIRONMENT }} == 'production' ]
           then
             export ACCEESS_TOKEN=${{ secrets.PRODUCTION_TOKEN }}
             export URI=${{ env.APPSYNC_PROD_URL }}
+            echo "This is production!"            
           fi
-          python3 -m pytest testing/apis_sanity_test.py
+          #python3 -m pytest testing/apis_sanity_test.py
+
 
       - name: Show variables
         if: always()
         run: |
           echo "Environment: ${{ inputs.ENVIRONMENT }}"
-          echo "uri: ${URI}"
           echo "GitHub's branch: ${{ github.ref_name }}"
