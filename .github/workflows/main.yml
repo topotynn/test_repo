@@ -42,11 +42,8 @@ jobs:
           echo 'Run script'
           python3 -m pytest ./testing/apis_sanity_test.py
 
-      - name: Report Status
-        if: failure()
-        uses: ravsamhq/notify-slack-action@v2
-        with:
-          status: ${{ job.status }}
-          notification_title: '{workflow} has {status_message}. ${{ env.ERROR_MESSAGE }}'
-        env:
-          SLACK_WEBHOOK_URL: ${{ inputs.HOOK }}
+      - name: Show variables
+        if: always()
+        run: |
+          echo "uri: ${URI}"
+          echo "GitHub's branch: ${{ github.ref_name }}"
