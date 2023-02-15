@@ -4,14 +4,12 @@ on:
 #    - cron: '0 * * * *' # every hour on the hour
   workflow_dispatch:
     inputs:
-      APPSYNC_URL:
-        type: 'string'
-        description: 'AppSync URI'
-      TOKEN:
-        type: 'string'
-        description: 'AppSync token'
-      HOOK:
-        type: 'string'
+      ENVIRONMENT:
+        type: 'choice'
+        description: 'Choose the environment'
+        options:
+          - 'production'
+          - 'develop'
 
 
 env:
@@ -37,13 +35,20 @@ jobs:
       - name: run testing script
         run: |
           pip3 install -r ./testing/requirements.txt
-          export ACCEESS_TOKEN=${{ env.DEV_TOKEN }}
-          export URI=${{ env.APPSYNC_DEV_URL }}
-          echo 'Run script'
-          python3 -m pytest ./testing/apis_sanity_test.py
+          if [ ${{ inputs.ENVIRONMENT }} == 'develop' ]
+          then
+            export ACCEESS_TOKEN=${{ secrets.DEV_TOKEN }}
+            export URI=${{ env.APPSYNC_DEV_URL }}
+          elif [ ${{ inputs.ENVIRONMENT }} == 'production' ]
+          then
+            export ACCEESS_TOKEN=${{ secrets.PRODUCTION_TOKEN }}
+            export URI=${{ env.APPSYNC_PROD_URL }}
+          fi
+          python3 -m pytest testing/apis_sanity_test.py
 
       - name: Show variables
         if: always()
         run: |
+          echo "Environment: ${{ inputs.ENVIRONMENT }}"
           echo "uri: ${URI}"
           echo "GitHub's branch: ${{ github.ref_name }}"
