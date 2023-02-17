@@ -32,7 +32,7 @@ jobs:
       - name: run script
         run: |
           aws ssm send-command --document-name AWS-RunShellScript --targets '[{"Key":"InstanceIds","Values":["i-03506613c27d0e236"]}]' \
-          --parameters '{"workingDirectory":["/home/ec2-user/ssm_script/chainify"],"executionTimeout":["3600"],"commands":["git pull; cd ./scripts; python3 ${{ SCRIPT_NAME }} ${{ PARAMETERS }}"]}' \
+          --parameters '{"workingDirectory":["/home/ec2-user/ssm_script/chainify"],"executionTimeout":["3600"],"commands":["git pull; cd ./scripts; python3 ${{ inputs.SCRIPT_NAME }} ${{ inputs.PARAMETERS }}"]}' \
           --timeout-seconds 600 --max-concurrency "50" --max-errors "0" --cloud-watch-output-config '{"CloudWatchOutputEnabled":true,"CloudWatchLogGroupName":"ssm_scripts"}'
 
       - name: Show variables
