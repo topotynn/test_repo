@@ -1,56 +1,36 @@
-name: testing
-on:
-#  schedule:
-#    - cron: '0 * * * *' # every hour on the hour
-  workflow_dispatch:
-    inputs:
-      ENVIRONMENT:
-        type: 'choice'
-        description: 'Choose the environment'
-        options:
-          - 'production'
-          - 'develop'
+name: run_script
 
+on:
+  workflow_dispatch:
 
 env:
-  APPSYNC_DEV_URL: 'https://ry4dsee7fbgrvmkw67vybrra3i.appsync-api.us-east-1.amazonaws.com/graphql'
-  APPSYNC_PROD_URL: 'https://dh3onmef7bhrhkyvw7uqeoczh4.appsync-api.us-east-1.amazonaws.com/graphql'
-  PRODUCTION_TOKEN: ${{ secrets.PRODUCTION_TOKEN }}
-  DEV_TOKEN: ${{ secrets.DEV_TOKEN }}
+  AWS_REGION: us-east-1
 
 jobs:
-  deploy:
-    name: testing
-    runs-on: ubuntu-latest
+  build:
+    name: Build Docker Image
+    runs-on: "ubuntu-latest"
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
+      - name: "Checkout code"
+        uses: "actions/checkout@v3"
 
-      - name: Setup Python 3.9
-        uses: actions/setup-python@v4
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1.7.0
         with:
-          python-version: '3.9'
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
 
-      - name: run testing script
+      - name: Login to Amazon ECR
+        uses: aws-actions/amazon-ecr-login@v1.5.3
+
+      - name: run script
         run: |
-          pip3 install -r ./testing/requirements.txt
-          if [ ${{ inputs.ENVIRONMENT }} == 'develop' ]
-          then
-            export ACCEESS_TOKEN=${{ secrets.DEV_TOKEN }}
-            export URI=${{ env.APPSYNC_DEV_URL }}
-            echo "This is develop!"
-          elif [ ${{ inputs.ENVIRONMENT }} == 'production' ]
-          then
-            export ACCEESS_TOKEN=${{ secrets.PRODUCTION_TOKEN }}
-            export URI=${{ env.APPSYNC_PROD_URL }}
-            echo "This is production!"            
-          fi
-          #python3 -m pytest testing/apis_sanity_test.py
-
+          aws ssm send-command --document-name AWS-RunShellScript --targets '[{"Key":"InstanceIds","Values":["i-03506613c27d0e236"]}]' \
+          --parameters '{"workingDirectory":["/home/ec2-user"],"executionTimeout":["3600"],"commands":["cd /home/ec2-user/ssm_test/chainify; git pull; python3 script_test.py"]}' \
+          --timeout-seconds 600 --max-concurrency "50" --max-errors "0"
 
       - name: Show variables
-        if: always()
         run: |
-          echo "Environment: ${{ inputs.ENVIRONMENT }}"
-          echo "GitHub's branch: ${{ github.ref_name }}"
+          echo "Hello world"
