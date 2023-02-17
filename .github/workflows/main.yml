@@ -6,6 +6,7 @@ on:
       SCRIPT_NAME:
         type: 'string'
         description: 'Fill in the script name'
+        default: 'example_script.py'
       PARAMETERS:
         type: 'string'
         description: 'Fill in the script parameters'
